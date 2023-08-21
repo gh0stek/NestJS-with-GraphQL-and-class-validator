@@ -1,0 +1,88 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Customer {
+  id: ID!
+
+  """Date and time when object was created."""
+  createdAt: Timestamp!
+
+  """Date and time when the object was updated last time."""
+  updatedAt: Timestamp!
+  email: String!
+  role: String!
+}
+
+"""
+`Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
+"""
+scalar Timestamp
+
+type AuthenticationCredentials {
+  authToken: String!
+  refreshToken: String
+}
+
+type Query {
+  customers(data: GetCustomerInput!): [Customer!]!
+  me: Customer!
+}
+
+input GetCustomerInput {
+  cursor: String
+  skip: Int
+  take: Int
+  where: WhereCustomerInput
+}
+
+input WhereCustomerInput {
+  id: String
+  email: String
+  createdAt: Timestamp
+  updatedAt: Timestamp
+}
+
+type Mutation {
+  register(data: RegisterCustomerInput!): Customer!
+  create(data: CreateCustomerInput!): Customer!
+  update(id: String!, data: UpdateCustomerInput!): Customer!
+  delete(id: String!): Customer!
+  login(credentials: LoginCredentials!): AuthenticationCredentials!
+  changePassword(credentials: ChangePassword!): AuthenticationCredentials!
+  refreshToken(refreshToken: String!): AuthenticationCredentials!
+  logout: Boolean!
+  generateVerificationCode: Boolean!
+  verifyCode(code: String!): Boolean!
+}
+
+input RegisterCustomerInput {
+  email: String!
+  password: String!
+}
+
+input CreateCustomerInput {
+  email: String!
+  password: String!
+  role: String!
+}
+
+input UpdateCustomerInput {
+  email: String
+  password: String
+  role: String
+}
+
+input LoginCredentials {
+  """Valid user email"""
+  email: String!
+
+  """Password must be at least 8 characters long."""
+  password: String!
+}
+
+input ChangePassword {
+  oldPassword: String!
+  password: String!
+  confirmPassword: String!
+}
